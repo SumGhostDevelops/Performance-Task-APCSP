@@ -13,7 +13,7 @@ When I have an idea what im gonna make ill write below vvv
 *flappy bird 
 *some other game 
 ```
-#B00b69
+
 This repo is also for me to ***learn how to properly use git/github*** <sub>  
 because i need to learn lmao.</sub>
 using this read me file as a dev log ig idk 
