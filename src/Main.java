@@ -15,5 +15,7 @@ public class Main {
         b1.setSize(200,200);
         b1.setVisible(true);
 
+        ImageIcon mai = new ImageIcon("maimai.jpg");
+        window.setIconImage(mai.getImage());
     }
 }
