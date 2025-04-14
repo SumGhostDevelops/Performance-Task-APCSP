@@ -280,7 +280,6 @@ public class Panel extends JPanel implements ActionListener {
 
 
 
-
             }
         }
 
