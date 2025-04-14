@@ -28,8 +28,8 @@ I need to
 
 - [X] Pick the language
 - [X] Pick the Game I'm gonna make
-- [X] Actually work on the program (ON)
-- [ ] profit :fire:
+- [X] Actually work on the program 
+- [ ] profit :fire: (waiting on the teachers approval)
 
 (4.14.25 4:52AM) wow i didn't expect to finish it today. uhh im so tired welp time to wake up in an hour!!! 😃
 
