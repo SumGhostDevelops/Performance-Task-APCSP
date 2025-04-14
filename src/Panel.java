@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
-import java.util.random.*;
 
 public class Panel extends JPanel implements ActionListener {
 
@@ -130,10 +129,10 @@ public class Panel extends JPanel implements ActionListener {
     }
     public void End(Graphics screen) {
         screen.setColor(new Color(125, 42, 64));
-
-
         screen.setFont(new Font("Helvetica", Font.BOLD, 50));
         FontMetrics metrics = getFontMetrics(screen.getFont());
+        FontMetrics metrics2 = getFontMetrics(screen.getFont());
+        screen.drawString("Score: " + Score, (ScreenDim - metrics.stringWidth("Score: " + Score))/2, screen.getFont().getSize());
         screen.drawString("Game Over :c", (ScreenDim - metrics.stringWidth("Game Over :c"))/2, ScreenDim/2);
 
     }
