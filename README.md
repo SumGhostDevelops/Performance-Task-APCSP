@@ -7,19 +7,20 @@ When I have an idea what im gonna make ill write below vvv
 
 ## Games I thought of 
 ```
-*tetris 
+*Tetris 
 *snake 
 *text adventure 
 *flappy bird 
 *some other game 
 ```
 (4.14.25) I decided to make snake because I like snakes also the other ones seemed too easy or hard (end)
+
 This repo is also for me to ***learn how to properly use git/github*** <sub>  
-because i need to learn lmao.</sub>
-using this read me file as a dev log ig idk 
+because I need to learn lmao.</sub>
+using this read-me file as a dev log ig idk 
 
 ## Language
-The program will be made Java, spcifically using Java Swing and Panel to make the program :D
+The program will be made Java, specifically using Java Swing and Panel to make the program :D
 
 # Tasks
 
@@ -27,9 +28,10 @@ I need to
 
 - [X] Pick the language
 - [X] Pick the Game I'm gonna make
-- [] Actually work on the program (ON)
+- [X] Actually work on the program (ON)
 - [ ] profit :fire:
 
+(4.14.25 4:52AM) wow i didn't expect to finish it today. uhh im so tired welp time to wake up in an hour!!! 😃
 
 <sub> hope this works </sub>
 >banana<br/>
