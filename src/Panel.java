@@ -224,7 +224,7 @@ public class Panel extends JPanel implements ActionListener {
                         direction = 'W';
                     }
                     break;
-
+//haii
 
             }
         }
