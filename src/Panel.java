@@ -14,7 +14,7 @@ public class Panel extends JPanel implements ActionListener {
     boolean running = false;
     Timer t;
     Random r;
-    String BackgroundMusic = "ASGORE.wav";
+    File BackgroundMusic = new File("ASGORE.wav");
 
     //Snake Variables
     final int snakeX[] = new int[ ((Dimensions * 2)/ unit)]; //X positions of all snake bodyparts
@@ -48,15 +48,18 @@ public class Panel extends JPanel implements ActionListener {
 
     Start();
     }
-    public void Start(){
+    public void Start() {
         // this creates the first appple
         CreatePiece();
         running = true;
         //the longer the number, the longer has to wait for the next input.. think of it like a minceaft tick
         // im writing this at 4am please be gentle with ma brain  its in  millseconds
         t = new Timer(Tick, this);
-        t.start();
 
+//        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(BackgroundMusic);
+//        Clip clip = AudioSystem.getClip();
+//        clip.open(audioStream);
+        t.start();
     }
     public void move(){
         // It makes all of the snake parts
