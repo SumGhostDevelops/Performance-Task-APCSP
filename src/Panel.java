@@ -9,7 +9,7 @@ public class Panel extends JPanel implements ActionListener {
     static int ScreenDim = 500; // dimension of screen.
     static int unit = 20; // how big each part of the grid.
     static int total_units = ((ScreenDim * 2)/ unit); // Gets the total amount of squares in the window
-    static int GLOBAL_OFFSET = 50; //how fast the game is going
+    static int GLOBAL_SPEED = 30; //how fast the game is going
     boolean running = false;
     Timer t;
     Random r;
@@ -38,7 +38,7 @@ public class Panel extends JPanel implements ActionListener {
     public void Start(){
         CreatePiece();
         running = true;
-        t = new Timer(GLOBAL_OFFSET, this);
+        t = new Timer(GLOBAL_SPEED, this);
         t.start();
     }
     public void move(){
