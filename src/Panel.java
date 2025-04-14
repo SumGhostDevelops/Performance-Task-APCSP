@@ -19,7 +19,7 @@ public class Panel extends JPanel implements ActionListener {
     final int snakeX[] = new int[total_units]; //X positions of all snake bodyparts
     final int snakeY[] = new int[total_units]; //Y positions of all snake body parts
     int snake_body = 5; // starting snake body
-    char direction = 'D'; // which direction the snake is facing
+    char direction = 'E'; // which direction the snake is facing
 
     //Apple variables
     int Score;
@@ -48,18 +48,19 @@ public class Panel extends JPanel implements ActionListener {
             snakeY[i] = snakeY[i-1];
         }
         switch(direction){
-            case 'W':
+            case 'N':
                 snakeY[0] = snakeY[0] - unit;
+                break;
+            case 'E':
+                snakeX[0] = snakeX[0] + unit;
                 break;
             case 'S':
                 snakeY[0] = snakeY[0] + unit;
                 break;
-            case 'A':
+            case 'W':
                 snakeX[0] = snakeX[0] - unit;
                 break;
-            case 'D':
-                snakeX[0] = snakeX[0] + unit;
-                break;
+
 
         }
     }
@@ -95,8 +96,21 @@ public class Panel extends JPanel implements ActionListener {
         appleX = r.nextInt((int)(ScreenDim/unit))*unit;
         appleY = r.nextInt((int)(ScreenDim/unit))*unit;
     }
-    public void CollisionChecker(){
-
+    public void CollisionChecker() {
+        for (int i = snake_body; i > 0; i--) {
+            if ((snakeX[i] == snakeX[0]) &&  (snakeY[i] == snakeY[0])){
+                running = false;
+            }
+        }
+        if ((snakeX[0] < 0) || (snakeX[0]) > ScreenDim){
+            running = false;
+        }
+        if ((snakeY[0] < 0) || snakeY[0] > ScreenDim){
+            running = false;
+        }
+        if (!running){
+            t.stop();
+        }
     }
     public void AppleChecker(){
 
@@ -116,9 +130,36 @@ public class Panel extends JPanel implements ActionListener {
     }
 
     public class KeyDetect extends KeyAdapter{
-        public void KeyPressed(KeyEvent e)
+        @Override
+        public void keyPressed(KeyEvent e)
         {
+            switch (e.getKeyCode()){
 
+                case KeyEvent.VK_UP:
+                    if(direction != 'S'){
+                        direction = 'N';
+                    }
+                    break;
+
+                case KeyEvent.VK_DOWN:
+                    if(direction != 'N'){
+                        direction = 'S';
+                    }
+                    break;
+
+                case KeyEvent.VK_RIGHT:
+                    if(direction != 'W'){
+                        direction = 'E';
+                    }
+                    break;
+
+                case KeyEvent.VK_LEFT:
+                    if(direction != 'E'){
+                        direction = 'W';
+                    }
+                    break;
+
+            }
         }
 
     }
