@@ -13,7 +13,7 @@ When I have an idea what im gonna make ill write below vvv
 *flappy bird 
 *some other game 
 ```
-(4.14.25) I decided to make snake because I like snakes also the other ones seemed too easy or hard (end)
+(4.14.25 12:02AM) I decided to make snake because I like snakes also the other ones seemed too easy or hard (end)
 
 This repo is also for me to ***learn how to properly use git/github*** <sub>  
 because I need to learn lmao.</sub>
