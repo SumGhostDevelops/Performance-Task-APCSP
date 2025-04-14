@@ -224,6 +224,9 @@ public class Panel extends JPanel implements ActionListener {
                         direction = 'W';
                     }
                     break;
+                    case KeyEvent.VK_N:
+                        running = false;
+                        break;
 //haii hello
 
             }
