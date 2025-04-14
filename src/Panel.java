@@ -14,7 +14,9 @@ public class Panel extends JPanel implements ActionListener {
     boolean running = false;
     Timer t;
     Random r;
-    File BackgroundMusic = new File("ASGORE.wav");
+    File BackgroundMusic = new File("/Users/sumghost/IdeaProjects/Performance-Task-APCSP/src/ASGORE.wav");
+    boolean MusicOn = true;
+    File CoinCollect = new File("/Users/sumghost/IdeaProjects/Performance-Task-APCSP/src/pickupCoin.wav");
 
     //Snake Variables
     final int snakeX[] = new int[ ((Dimensions * 2)/ unit)]; //X positions of all snake bodyparts
@@ -56,12 +58,31 @@ public class Panel extends JPanel implements ActionListener {
         // im writing this at 4am please be gentle with ma brain  its in  millseconds
         t = new Timer(Tick, this);
 
-//        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(BackgroundMusic);
-//        Clip clip = AudioSystem.getClip();
-//        clip.open(audioStream);
+        // plays background music
+        AudioInputStream audioInputStream;
+        Clip BGM;
+        if (MusicOn) {
+        try {
+
+                audioInputStream = AudioSystem.getAudioInputStream(BackgroundMusic);
+                BGM = AudioSystem.getClip();
+                BGM.open(audioInputStream);
+                BGM.start();
+                BGM.loop(Clip.LOOP_CONTINUOUSLY);
+                if (!running){
+                    BGM.close();
+                }
+            } catch(UnsupportedAudioFileException e){
+                throw new RuntimeException(e);
+            } catch(IOException e){
+                throw new RuntimeException(e);
+            } catch(LineUnavailableException e){
+                throw new RuntimeException(e);
+            }
+        }
         t.start();
     }
-    public void move(){
+        public void move(){
         // It makes all of the snake parts
         for( int i = snake_body; i > 0; i--){
             snakeX[i] = snakeX[i-1];
@@ -155,6 +176,19 @@ public class Panel extends JPanel implements ActionListener {
         snake_body++;
         Score++;
         CreatePiece();
+        AudioInputStream audioInputStream2;
+        try {
+            audioInputStream2 = AudioSystem.getAudioInputStream(CoinCollect);
+            Clip Coin_Collect = AudioSystem.getClip();
+            Coin_Collect.open(audioInputStream2);
+            Coin_Collect.start();
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
