@@ -90,6 +90,13 @@ public class Panel extends JPanel implements ActionListener {
                     g.fillRect(snakeX[i],snakeY[i], unit, unit);
                 }
             }
+            g.setColor(new Color(159, 190, 227));
+            g.setFont(new Font("Helvetica", Font.BOLD, 30));
+            FontMetrics metrics = getFontMetrics(g.getFont());
+            g.drawString("Score: " + Score, (0), g.getFont().getSize());
+
+        }else{
+            End(g);
         }
     }
     public void CreatePiece(){
@@ -113,9 +120,21 @@ public class Panel extends JPanel implements ActionListener {
         }
     }
     public void AppleChecker(){
+    if((snakeX[0] == appleX) && (snakeY[0] == appleY)){
+        snake_body++;
+        Score++;
+        CreatePiece();
 
     }
-    public void End(Graphics screen){
+
+    }
+    public void End(Graphics screen) {
+        screen.setColor(new Color(125, 42, 64));
+
+
+        screen.setFont(new Font("Helvetica", Font.BOLD, 50));
+        FontMetrics metrics = getFontMetrics(screen.getFont());
+        screen.drawString("Game Over :c", (ScreenDim - metrics.stringWidth("Game Over :c"))/2, ScreenDim/2);
 
     }
     @Override
@@ -158,6 +177,30 @@ public class Panel extends JPanel implements ActionListener {
                         direction = 'W';
                     }
                     break;
+                case KeyEvent.VK_W:
+                    if(direction != 'S'){
+                        direction = 'N';
+                    }
+                    break;
+
+                case KeyEvent.VK_S:
+                    if(direction != 'N'){
+                        direction = 'S';
+                    }
+                    break;
+
+                case KeyEvent.VK_D:
+                    if(direction != 'W'){
+                        direction = 'E';
+                    }
+                    break;
+
+                case KeyEvent.VK_A:
+                    if(direction != 'E'){
+                        direction = 'W';
+                    }
+                    break;
+
 
             }
         }
