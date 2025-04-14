@@ -6,38 +6,43 @@ import java.util.Random;
 public class Panel extends JPanel implements ActionListener {
 
     // Game Settings
-    static int ScreenDim = 500; // dimension of screen.
+    static int Dimensions = 500; // dimension of screen.
     static int unit = 20; // how big each part of the grid.
-    static int total_units = ((ScreenDim * 2)/ unit); // Gets the total amount of squares in the window
-    static int GLOBAL_DESPEEDER = 80; //how fast the game is going
+    static int Tick = 80; //how fast the game is going
     boolean running = false;
     Timer t;
     Random r;
 
     //Snake Variables
-    final int snakeX[] = new int[total_units]; //X positions of all snake bodyparts
-    final int snakeY[] = new int[total_units]; //Y positions of all snake body parts
+    final int snakeX[] = new int[ ((Dimensions * 2)/ unit)]; //X positions of all snake bodyparts
+    final int snakeY[] = new int[ ((Dimensions * 2)/ unit)]; //Y positions of all snake body parts
     int snake_body = 5; // starting snake body
     char direction = 'E'; // which direction the snake is facing
 
     //Apple variables
+
     int Score;  // this keeps the amount of apples the snake eats
+
     //apples lacation
     int appleX;
     int appleY;
 
 
     Panel(){
-    r = new Random();
+
+
 
 
     //i feel like this is obvious
-    this.setPreferredSize(new Dimension(ScreenDim,ScreenDim));
+    this.setPreferredSize(new Dimension(Dimensions, Dimensions));
     this.setBackground(Color.black);
     this.setFocusable(true);
     //this adds a key detecter to 'listen' to any keys pressed and gives it to the keydetect function
     this.addKeyListener(new KeyDetect());
     //start the game :D
+
+    r = new Random();
+
     Start();
     }
     public void Start(){
@@ -46,7 +51,7 @@ public class Panel extends JPanel implements ActionListener {
         running = true;
         //the longer the number, the longer has to wait for the next input.. think of it like a minceaft tick
         // im writing this at 4am please be gentle with ma brain  its in  millseconds
-        t = new Timer(GLOBAL_DESPEEDER, this);
+        t = new Timer(Tick, this);
         t.start();
     }
     public void move(){
@@ -82,10 +87,10 @@ public class Panel extends JPanel implements ActionListener {
 
         if (running) {
             // this makes the grid
-            for (int i = 0; i <( ScreenDim / unit); i++) {
+            for (int i = 0; i <( Dimensions / unit); i++) {
 
-                g.drawLine(i * unit, 0, i * unit, ScreenDim);
-                g.drawLine(0, i * unit, ScreenDim, i * unit);
+                g.drawLine(i * unit, 0, i * unit, Dimensions);
+                g.drawLine(0, i * unit, Dimensions, i * unit);
                 g.setColor(new Color(105, 105, 105));
             }
             //draws the apple
@@ -117,8 +122,9 @@ public class Panel extends JPanel implements ActionListener {
     }
     public void CreatePiece(){
         //sets a random position for the apple
-        appleX = r.nextInt((int)(ScreenDim/unit))*unit;
-        appleY = r.nextInt((int)(ScreenDim/unit))*unit;
+
+        appleX = r.nextInt((int)(Dimensions /unit))*unit;
+        appleY = r.nextInt((int)(Dimensions /unit))*unit;
     }
     public void CollisionChecker() {
         for (int i = snake_body; i > 0; i--) {
@@ -128,14 +134,11 @@ public class Panel extends JPanel implements ActionListener {
             }
         }
         //this checks if the snake hits the border
-        if ((snakeX[0] < 0) || (snakeX[0]) > ScreenDim){
+        if ((snakeX[0] < 0) || (snakeX[0]) > Dimensions){
             running = false;
         }
-        if ((snakeY[0] < 0) || snakeY[0] > ScreenDim){
+        if ((snakeY[0] < 0) || snakeY[0] > Dimensions){
             running = false;
-        }
-        if (!running){
-            t.stop();
         }
     }
     public void AppleChecker(){
@@ -150,15 +153,15 @@ public class Panel extends JPanel implements ActionListener {
     }
     public void End(Graphics screen) {
         //draws the end screen
-        this.addKeyListener(new KeyDetect());
         screen.setColor(new Color(125, 42, 64));
         screen.setFont(new Font("Helvetica", Font.BOLD, 50));
         FontMetrics metrics = getFontMetrics(screen.getFont());
         FontMetrics metrics2 = getFontMetrics(screen.getFont());
-        screen.drawString("Score: " + Score, (ScreenDim - metrics.stringWidth("Score: " + Score))/2, screen.getFont().getSize());
-        screen.drawString("Game Over :c", (ScreenDim - metrics.stringWidth("Game Over :c"))/2, ScreenDim/2);
+        screen.drawString("Score: " + Score, (Dimensions - metrics.stringWidth("Score: " + Score))/2, screen.getFont().getSize());
+        screen.drawString("Game Over :c", (Dimensions - metrics.stringWidth("Game Over :c"))/2, Dimensions /2);
 
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         //this will see at anypoint that if any key is presed / action is performed
@@ -166,6 +169,8 @@ public class Panel extends JPanel implements ActionListener {
             move();
             AppleChecker();
             CollisionChecker();
+
+        }else{
 
         }
         repaint();
@@ -227,6 +232,14 @@ public class Panel extends JPanel implements ActionListener {
                     case KeyEvent.VK_N:
                         running = false;
                         break;
+                case KeyEvent.VK_R:
+                    if(!running){
+                        new ProgramFrame();
+
+                    }
+                    break;
+
+
 //haii hello
 
             }
