@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
+import java.io.*;
+import javax.sound.sampled.*;
 
 public class Panel extends JPanel implements ActionListener {
 
@@ -12,6 +14,7 @@ public class Panel extends JPanel implements ActionListener {
     boolean running = false;
     Timer t;
     Random r;
+    String BackgroundMusic = "ASGORE.wav";
 
     //Snake Variables
     final int snakeX[] = new int[ ((Dimensions * 2)/ unit)]; //X positions of all snake bodyparts
@@ -53,6 +56,7 @@ public class Panel extends JPanel implements ActionListener {
         // im writing this at 4am please be gentle with ma brain  its in  millseconds
         t = new Timer(Tick, this);
         t.start();
+
     }
     public void move(){
         // It makes all of the snake parts
@@ -78,6 +82,7 @@ public class Panel extends JPanel implements ActionListener {
 
         }
     }
+
     //also pretty self-explainatory, it draws the shapes
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
