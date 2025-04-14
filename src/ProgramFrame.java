@@ -6,7 +6,7 @@ public class ProgramFrame extends JFrame {
 
         this.add(new Panel()); // creates an instance of the actual game
 
-
+        
         this.setVisible(true);
         this.setTitle("Sigma Game Hatsune Miku");
         this.setResizable(false);
