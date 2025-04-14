@@ -69,9 +69,6 @@ public class Panel extends JPanel implements ActionListener {
                 BGM.open(audioInputStream);
                 BGM.start();
                 BGM.loop(Clip.LOOP_CONTINUOUSLY);
-                if (!running){
-                    BGM.close();
-                }
             } catch(UnsupportedAudioFileException e){
                 throw new RuntimeException(e);
             } catch(IOException e){
@@ -282,7 +279,7 @@ public class Panel extends JPanel implements ActionListener {
                     break;
 
 
-//haii hello
+
 
             }
         }
