@@ -10,13 +10,13 @@ public class Panel extends JPanel implements ActionListener {
     // Game Settings
     static int Dimensions = 500; // dimension of screen.
     static int unit = 20; // how big each part of the grid.
-    static int Tick = 80; //how fast the game is going
+    static int Tick = 50; //how fast the game is going
     boolean running = false;
     Timer t;
     Random r;
-    File BackgroundMusic = new File("/Users/sumghost/IdeaProjects/Performance-Task-APCSP/src/ASGORE.wav");
+    File BackgroundMusic = new File("src/ASGORE.wav");
     boolean MusicOn = true;
-    File CoinCollect = new File("/Users/sumghost/IdeaProjects/Performance-Task-APCSP/src/pickupCoin.wav");
+    File CoinCollect = new File("src/pickupCoin.wav");
 
     //Snake Variables
     final int snakeX[] = new int[ ((Dimensions * 2)/ unit)]; //X positions of all snake bodyparts
