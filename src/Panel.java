@@ -14,9 +14,9 @@ public class Panel extends JPanel implements ActionListener {
     public boolean running = false;
     Timer t;
     Random r;
-    File BackgroundMusic = new File("src/ASGORE.wav");
+    File BackgroundMusic = new File("src/ASGORE.wav"); // ASGORE by Toby Fox
     boolean MusicOn = false;
-    File CoinCollect = new File("src/pickupCoin.wav");
+    File CoinCollect = new File("src/pickupCoin.wav"); // Coin Sound effect by Me
 
     //Snake Variables
     final int snakeX[] = new int[ ((Dimensions * 2)/ unit)]; //X positions of all snake bodyparts
@@ -27,7 +27,7 @@ public class Panel extends JPanel implements ActionListener {
     //Apple variables
 
     int Score;  // this keeps the amount of apples the snake eats
-    int Highscore = -1;
+    int Highscore = -1; // creates a highscore variable and sets it to -1 since the player can't reach that
 
     //apples lacation
     int appleX;
@@ -51,7 +51,6 @@ public class Panel extends JPanel implements ActionListener {
 
     Start();
 
-
     }
 
 
@@ -64,17 +63,17 @@ public class Panel extends JPanel implements ActionListener {
         // im writing this at 4am please be gentle with ma brain  its in  millseconds
         t = new Timer(Tick, this);
 
-        // plays background music
+        // makes background music
         AudioInputStream audioInputStream;
         Clip BGM = null;
         if (MusicOn) {
             try {
 
-                    audioInputStream = AudioSystem.getAudioInputStream(BackgroundMusic);
+                    audioInputStream = AudioSystem.getAudioInputStream(BackgroundMusic); //sets the background Music
                     BGM = AudioSystem.getClip();
                     BGM.open(audioInputStream);
-                    BGM.start();
-                    BGM.loop(Clip.LOOP_CONTINUOUSLY);
+                    BGM.start(); //starts music
+                    BGM.loop(Clip.LOOP_CONTINUOUSLY); //loops music infinitely
                 } catch(UnsupportedAudioFileException e){
                     throw new RuntimeException(e);
                 } catch(IOException e){
@@ -86,14 +85,13 @@ public class Panel extends JPanel implements ActionListener {
         t.start();
         try {
             try {
-                Highscore = Integer.parseInt(this.GetHighScore());
-                System.out.println(Integer.parseInt(this.GetHighScore()));
+                Highscore = Integer.parseInt(this.GetHighScore());  //tries to get the highsore using the GetHighScore function, turns the string output to an integer
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-            CheckScore();
+            CheckScore(); //when the player dies, it checks if the score that was got was bigger than the highscore
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -130,6 +128,7 @@ public class Panel extends JPanel implements ActionListener {
         super.paintComponent(g);
         draw(g);
     }
+    //draws the game
     public void draw(Graphics g) {
 
         if (running) {
@@ -212,7 +211,7 @@ public class Panel extends JPanel implements ActionListener {
             CreatePiece();
             AudioInputStream audioInputStream2;
         try {
-                    audioInputStream2 = AudioSystem.getAudioInputStream(CoinCollect);
+                    audioInputStream2 = AudioSystem.getAudioInputStream(CoinCollect); //sets the auudio to play coin sound effect when played
                     Clip Coin_Collect = AudioSystem.getClip();
                     Coin_Collect.open(audioInputStream2);
                     Coin_Collect.start();
@@ -259,6 +258,12 @@ public class Panel extends JPanel implements ActionListener {
         }
         repaint();
     }
+
+    /*
+    This function gets the highscore by reading a file made by CheckHighscore
+    if there is no file made, the function will set the score to 0
+     */
+
     public String GetHighScore() throws IOException {
         BufferedReader bufferedReader = null;
         FileReader scoreReader = null;
@@ -279,6 +284,14 @@ public class Panel extends JPanel implements ActionListener {
             }
         }
     }
+
+        /*
+    This function checks the highscore by reading a file made by itself
+    if there is no file found, it will create a file called 'data.txt'
+    then it will try to write the highscore as a string so it could be read by GetHighScore
+
+     */
+
     public void CheckScore() throws IOException {
 
         if (Score > Highscore) {
