@@ -11,11 +11,11 @@ public class Panel extends JPanel implements ActionListener {
     static int Dimensions = 500; // dimension of screen.
     static int unit = 20; // how big each part of the grid.
     static int Tick = 50; //how fast the game is going
-    boolean running = false;
+    public boolean running = false;
     Timer t;
     Random r;
     File BackgroundMusic = new File("src/ASGORE.wav");
-    boolean MusicOn = true;
+    boolean MusicOn = false;
     File CoinCollect = new File("src/pickupCoin.wav");
 
     //Snake Variables
@@ -27,6 +27,7 @@ public class Panel extends JPanel implements ActionListener {
     //Apple variables
 
     int Score;  // this keeps the amount of apples the snake eats
+    int Highscore = -1;
 
     //apples lacation
     int appleX;
@@ -49,37 +50,57 @@ public class Panel extends JPanel implements ActionListener {
     r = new Random();
 
     Start();
+
+
     }
+
+
     public void Start() {
         // this creates the first appple
         CreatePiece();
         running = true;
+        MusicOn = true;
         //the longer the number, the longer has to wait for the next input.. think of it like a minceaft tick
         // im writing this at 4am please be gentle with ma brain  its in  millseconds
         t = new Timer(Tick, this);
 
         // plays background music
         AudioInputStream audioInputStream;
-        Clip BGM;
+        Clip BGM = null;
         if (MusicOn) {
-        try {
+            try {
 
-                audioInputStream = AudioSystem.getAudioInputStream(BackgroundMusic);
-                BGM = AudioSystem.getClip();
-                BGM.open(audioInputStream);
-                BGM.start();
-                BGM.loop(Clip.LOOP_CONTINUOUSLY);
-            } catch(UnsupportedAudioFileException e){
-                throw new RuntimeException(e);
-            } catch(IOException e){
-                throw new RuntimeException(e);
-            } catch(LineUnavailableException e){
+                    audioInputStream = AudioSystem.getAudioInputStream(BackgroundMusic);
+                    BGM = AudioSystem.getClip();
+                    BGM.open(audioInputStream);
+                    BGM.start();
+                    BGM.loop(Clip.LOOP_CONTINUOUSLY);
+                } catch(UnsupportedAudioFileException e){
+                    throw new RuntimeException(e);
+                } catch(IOException e){
+                    throw new RuntimeException(e);
+                } catch(LineUnavailableException e){
+                    throw new RuntimeException(e);
+                }
+            }
+        t.start();
+        try {
+            try {
+                Highscore = Integer.parseInt(this.GetHighScore());
+                System.out.println(Integer.parseInt(this.GetHighScore()));
+
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+            CheckScore();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        t.start();
     }
-        public void move(){
+
+
+    public void move(){
         // It makes all of the snake parts
         for( int i = snake_body; i > 0; i--){
             snakeX[i] = snakeX[i-1];
@@ -141,53 +162,78 @@ public class Panel extends JPanel implements ActionListener {
             FontMetrics metrics = getFontMetrics(g.getFont());
             g.drawString("Score: " + Score, (0), g.getFont().getSize());
 
+
+
         }else{
             //if the programs sets running to false, it puts the game into a gameover screen.
             End(g);
+            try {
+                CheckScore();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
+
     public void CreatePiece(){
         //sets a random position for the apple
 
         appleX = r.nextInt((int)(Dimensions /unit))*unit;
         appleY = r.nextInt((int)(Dimensions /unit))*unit;
     }
+
+
     public void CollisionChecker() {
         for (int i = snake_body; i > 0; i--) {
             //checks if the snake runs into itseld
             if ((snakeX[i] == snakeX[0]) &&  (snakeY[i] == snakeY[0])){
                 running = false;
+                MusicOn = false;
             }
         }
         //this checks if the snake hits the border
         if ((snakeX[0] < 0) || (snakeX[0]) > Dimensions){
             running = false;
+            MusicOn = false;
+
         }
         if ((snakeY[0] < 0) || snakeY[0] > Dimensions){
             running = false;
+            MusicOn = false;
         }
     }
+
+
     public void AppleChecker(){
         //if the snakes head hits the apple, it makes a new one and adds to the score
-    if((snakeX[0] == appleX) && (snakeY[0] == appleY)){
-        snake_body++;
-        Score++;
-        CreatePiece();
-        AudioInputStream audioInputStream2;
+        if((snakeX[0] == appleX) && (snakeY[0] == appleY)){
+            snake_body++;
+            Score++;
+            CreatePiece();
+            AudioInputStream audioInputStream2;
         try {
-            audioInputStream2 = AudioSystem.getAudioInputStream(CoinCollect);
-            Clip Coin_Collect = AudioSystem.getClip();
-            Coin_Collect.open(audioInputStream2);
-            Coin_Collect.start();
-        } catch (UnsupportedAudioFileException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (LineUnavailableException e) {
-            throw new RuntimeException(e);
-        }
+                    audioInputStream2 = AudioSystem.getAudioInputStream(CoinCollect);
+                    Clip Coin_Collect = AudioSystem.getClip();
+                    Coin_Collect.open(audioInputStream2);
+                    Coin_Collect.start();
 
-    }
+            } catch (UnsupportedAudioFileException e)
+
+            {
+                throw new RuntimeException(e);
+
+            } catch (IOException e)
+
+            {
+                throw new RuntimeException(e);
+
+            } catch (LineUnavailableException e)
+
+            {
+                throw new RuntimeException(e);
+            }
+
+            }
 
     }
     public void End(Graphics screen) {
@@ -197,6 +243,7 @@ public class Panel extends JPanel implements ActionListener {
         FontMetrics metrics = getFontMetrics(screen.getFont());
         FontMetrics metrics2 = getFontMetrics(screen.getFont());
         screen.drawString("Score: " + Score, (Dimensions - metrics.stringWidth("Score: " + Score))/2, screen.getFont().getSize());
+        screen.drawString("HighScore: " + Highscore, (Dimensions - metrics.stringWidth("HighScore: " + Highscore))/2, screen.getFont().getSize() + 100);
         screen.drawString("Game Over :c", (Dimensions - metrics.stringWidth("Game Over :c"))/2, Dimensions /2);
 
     }
@@ -209,12 +256,62 @@ public class Panel extends JPanel implements ActionListener {
             AppleChecker();
             CollisionChecker();
 
-        }else{
-
         }
         repaint();
     }
+    public String GetHighScore() throws IOException {
+        BufferedReader bufferedReader = null;
+        FileReader scoreReader = null;
+        try {
 
+            bufferedReader = new BufferedReader(new FileReader("data.txt"));
+            return bufferedReader.readLine();
+
+        }catch (FileNotFoundException e){
+            return "0";
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (bufferedReader != null) {
+                bufferedReader.close();
+            }
+        }
+    }
+    public void CheckScore() throws IOException {
+
+        if (Score > Highscore) {
+            Highscore = Score;
+            File scoreFile = new File("data.txt");
+            if (!scoreFile.exists()) {
+                try {
+                    scoreFile.createNewFile();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            BufferedWriter bufferedWriter = null;
+            try {
+                bufferedWriter = new BufferedWriter(new FileWriter(scoreFile));
+                bufferedWriter.write(String.valueOf(this.Highscore));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            } finally {
+                if (bufferedWriter != null) {
+                    bufferedWriter.close();
+                }
+            }
+        }else{
+            try{
+                Highscore = Integer.parseInt(this.GetHighScore());
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
     public class KeyDetect extends KeyAdapter{
         @Override
         public void keyPressed(KeyEvent e)
@@ -268,18 +365,6 @@ public class Panel extends JPanel implements ActionListener {
                         direction = 'W';
                     }
                     break;
-                    case KeyEvent.VK_N:
-                        running = false;
-                        break;
-                case KeyEvent.VK_R:
-                    if(!running){
-                        new ProgramFrame();
-
-                    }
-                    break;
-
-
-
             }
         }
 
