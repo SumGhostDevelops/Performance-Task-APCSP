@@ -14,9 +14,9 @@ public class Panel extends JPanel implements ActionListener {
     public boolean running = false;
     Timer t;
     Random r;
-    File BackgroundMusic = new File("src/ASGORE.wav"); // ASGORE by Toby Fox
+    File BackgroundMusic = new File("src/ASGORE.wav"); // ASGORE by Toby Fox // https://www.youtube.com/watch?v=qrtt7mgwCTw
     boolean MusicOn = false;
-    File CoinCollect = new File("src/pickupCoin.wav"); // Coin Sound effect by Me
+    File CoinCollect = new File("src/pickupCoin.wav"); // Coin Sound effect by Me using https://sfxr.me/
 
     //Snake Variables
     final int snakeX[] = new int[ ((Dimensions * 2)/ unit)]; //X positions of all snake bodyparts
@@ -74,14 +74,10 @@ public class Panel extends JPanel implements ActionListener {
                     BGM.open(audioInputStream);
                     BGM.start(); //starts music
                     BGM.loop(Clip.LOOP_CONTINUOUSLY); //loops music infinitely
-                } catch(UnsupportedAudioFileException e){
-                    throw new RuntimeException(e);
-                } catch(IOException e){
-                    throw new RuntimeException(e);
-                } catch(LineUnavailableException e){
+                } catch(UnsupportedAudioFileException | LineUnavailableException | IOException e){
                     throw new RuntimeException(e);
                 }
-            }
+        }
         t.start();
         try {
             try {
@@ -177,17 +173,18 @@ public class Panel extends JPanel implements ActionListener {
     public void CreatePiece(){
         //sets a random position for the apple
 
-        appleX = r.nextInt((int)(Dimensions /unit))*unit;
-        appleY = r.nextInt((int)(Dimensions /unit))*unit;
+        appleX = r.nextInt((Dimensions /unit))*unit;
+        appleY = r.nextInt((Dimensions /unit))*unit;
     }
 
 
     public void CollisionChecker() {
         for (int i = snake_body; i > 0; i--) {
             //checks if the snake runs into itseld
-            if ((snakeX[i] == snakeX[0]) &&  (snakeY[i] == snakeY[0])){
+            if ((snakeX[i] == snakeX[0]) && (snakeY[i] == snakeY[0])) {
                 running = false;
                 MusicOn = false;
+                break;
             }
         }
         //this checks if the snake hits the border
@@ -216,23 +213,14 @@ public class Panel extends JPanel implements ActionListener {
                     Coin_Collect.open(audioInputStream2);
                     Coin_Collect.start();
 
-            } catch (UnsupportedAudioFileException e)
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e)
 
             {
                 throw new RuntimeException(e);
 
-            } catch (IOException e)
-
-            {
-                throw new RuntimeException(e);
-
-            } catch (LineUnavailableException e)
-
-            {
-                throw new RuntimeException(e);
             }
 
-            }
+        }
 
     }
     public void End(Graphics screen) {
@@ -332,48 +320,25 @@ public class Panel extends JPanel implements ActionListener {
             //all keybinds
             switch (e.getKeyCode()){
 // if the current direction of the snake is opposite of where it wants to go, it doesn't go to avoid dying.
-                case KeyEvent.VK_UP:
+                case KeyEvent.VK_UP, KeyEvent.VK_W:
                     if(direction != 'S'){
                         direction = 'N';
                     }
                     break;
 
-                case KeyEvent.VK_DOWN:
+                case KeyEvent.VK_DOWN, KeyEvent.VK_S:
                     if(direction != 'N'){
                         direction = 'S';
                     }
                     break;
 
-                case KeyEvent.VK_RIGHT:
+                case KeyEvent.VK_RIGHT, KeyEvent.VK_D:
                     if(direction != 'W'){
                         direction = 'E';
                     }
                     break;
 
-                case KeyEvent.VK_LEFT:
-                    if(direction != 'E'){
-                        direction = 'W';
-                    }
-                    break;
-                case KeyEvent.VK_W:
-                    if(direction != 'S'){
-                        direction = 'N';
-                    }
-                    break;
-
-                case KeyEvent.VK_S:
-                    if(direction != 'N'){
-                        direction = 'S';
-                    }
-                    break;
-
-                case KeyEvent.VK_D:
-                    if(direction != 'W'){
-                        direction = 'E';
-                    }
-                    break;
-
-                case KeyEvent.VK_A:
+                case KeyEvent.VK_LEFT, KeyEvent.VK_A:
                     if(direction != 'E'){
                         direction = 'W';
                     }
